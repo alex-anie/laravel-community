@@ -5,10 +5,10 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
-    return Inertia::render('Home', [
+    return Inertia::render('Jobs', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
-})->name('home');
+})->name('jobs');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

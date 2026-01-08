@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import CenterContent from '@/components/custom/CenterContent.vue';
 import NavLayouts from '@/layouts/NavLayouts.vue';
+import { Bold, Heading2, Heading3, Heading4, Italic, List, ListOrdered, Minus, Pilcrow, Redo, Strikethrough, TextQuote, Underline, Undo } from 'lucide-vue-next';
 
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit';
+import ToolTips from '@/components/custom/ToolTips.vue';
 
 const editor = useEditor({
     editorProps: {
@@ -27,69 +29,113 @@ const editor = useEditor({
                 <section>
                     <aside>
                         <section v-if="editor"
-                            class="buttons flex items-center flex-wrap gap-x-4 border-t border-x border-gray-400 p-4">
-                            <button @click="editor.chain().focus().toggleBold().run()"
-                                :disabled="!editor.can().chain().focus().toggleBold().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('bold') }" class="p-1">Bold</button>
-                            <button @click="editor.chain().focus().toggleItalic().run()"
-                                :disabled="!editor.can().chain().focus().toggleItalic().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('italic') }"
-                                class="p-1">italic</button>
-                            <button @click="editor.chain().focus().toggleUnderline().run()"
-                                :disabled="!editor.can().chain().focus().toggleItalic().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('underline') }"
-                                class="p-1">underline</button>
-                            <button @click="editor.chain().focus().toggleStrike().run()"
-                                :disabled="!editor.can().chain().focus().toggleStrike().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('strike') }">
-                                Strike
+                            class="buttons flex items-center flex-wrap gap-x-4 border-t border-x border-gray-400 p-4 text-red-600">
+                            <ToolTips tooltip="paragraph">
+                                <button @click="editor.chain().focus().setParagraph().run()"
+                                    :class="{ 'bg-red-200': editor.isActive('paragraph') }" class="p-1">
+                                    <Pilcrow class="size-4"/>
+                                </button>
+                            </ToolTips>
+                        
+                            <ToolTips tooltip="heading2">
+                                <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+                                    :class="{ 'bg-red-200': editor.isActive('heading', { level: 2 }) }" class="p-1">
+                                    <Heading2 class="size-4" />
+                                </button>
+                            </ToolTips>
+                            
+                            <ToolTips tooltip="heading3">
+                                <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+                                    :class="{ 'bg-red-200': editor.isActive('heading', { level: 3 }) }" class="p-1">
+                                    <Heading3 class="size-4" />
+                                </button>
+                            </ToolTips>
+                            <ToolTips tooltip="heading4">
+                                <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+                                    :class="{ 'bg-red-200': editor.isActive('heading', { level: 4 }) }" class="p-1">
+                                    <Heading4 class="size-4" />
+                                </button>
+                            </ToolTips>
+                        
+                            <ToolTips tooltip="bold">
+                                <button @click="editor.chain().focus().toggleBold().run()"
+                                    :disabled="!editor.can().chain().focus().toggleBold().run()"
+                                    :class="{ 'bg-red-200': editor.isActive('bold') }" class="p-1">
+                                    <Bold class="size-4" />
                             </button>
-
-                            <button @click="editor.chain().focus().unsetAllMarks().run()">Clear marks</button>
-                            <button @click="editor.chain().focus().clearNodes().run()">Clear nodes</button>
-                            <button @click="editor.chain().focus().setParagraph().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('paragraph') }">
-                                Paragraph
+                            </ToolTips>
+                        
+                            <ToolTips tooltip="italic">
+                                <button @click="editor.chain().focus().toggleItalic().run()"
+                                    :disabled="!editor.can().chain().focus().toggleItalic().run()"
+                                    :class="{ 'bg-red-200': editor.isActive('italic') }"
+                                    class="p-1">
+                                    <Italic class="size-4" />
+                                </button>
+                            </ToolTips>
+                        
+                            <ToolTips tooltip="underline">
+                                <button @click="editor.chain().focus().toggleUnderline().run()"
+                                    :disabled="!editor.can().chain().focus().toggleItalic().run()"
+                                    :class="{ 'bg-red-200': editor.isActive('underline') }"
+                                    class="p-1">
+                                    <Underline class="size-4" />
+                                </button>
+                            </ToolTips>
+                            
+                            <ToolTips tooltip="strike">
+                                <button @click="editor.chain().focus().toggleStrike().run()"
+                                    :disabled="!editor.can().chain().focus().toggleStrike().run()"
+                                    :class="{ 'bg-red-200': editor.isActive('strike') }" class="p-1">
+                                <Strikethrough class="size-4" />
                             </button>
-                            <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('heading', { level: 2 }) }">
-                                H2
+                            </ToolTips>
+                            
+                            <ToolTips tooltip="list">
+                                <button @click="editor.chain().focus().toggleBulletList().run()"
+                                    :class="{ 'bg-red-200': editor.isActive('bulletList') }" class="p-1">
+                                    <List class="size-4" />
+                                </button>
+                            </ToolTips>
+                           
+                            <ToolTips tooltip="number">
+                                <button @click="editor.chain().focus().toggleOrderedList().run()"
+                                    :class="{ 'bg-red-200': editor.isActive('orderedList') }" class="p-1">
+                                    <ListOrdered class="size-4" />
+                                </button>
+                            </ToolTips>
+                            
+                            <ToolTips tooltip="blockquote">
+                                <button @click="editor.chain().focus().toggleBlockquote().run()"
+                                :class="{ 'bg-red-200': editor.isActive('blockquote') }" class="p-1">
+                                <TextQuote class="size-4" />
                             </button>
-                            <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('heading', { level: 3 }) }">
-                                H3
+                            </ToolTips>
+                            
+                            <ToolTips tooltip="line-brake">
+                                <button @click="editor.chain().focus().setHorizontalRule().run()">
+                                <Minus class="size-4" />
                             </button>
-                            <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('heading', { level: 4 }) }">
-                                H4
-                            </button>
-
-                            <button @click="editor.chain().focus().toggleBulletList().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('bulletList') }">
-                                Bullet list
-                            </button>
-                            <button @click="editor.chain().focus().toggleOrderedList().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('orderedList') }">
-                                Ordered list
-                            </button>
-                            <button @click="editor.chain().focus().toggleBlockquote().run()"
-                                :class="{ 'bg-gray-200 rounded': editor.isActive('blockquote') }">
-                                Blockquote
-                            </button>
-                            <button @click="editor.chain().focus().setHorizontalRule().run()">Horizontal rule</button>
-                            <button @click="editor.chain().focus().undo().run()"
+                            </ToolTips>
+                        
+                            <ToolTips tooltip="undo">
+                                <button @click="editor.chain().focus().undo().run()"
                                 :disabled="!editor.can().chain().focus().undo().run()"
                                 class="p-1 disabled:text-gray-300"
                                 >
-                                Undo
-                            </button>
-                            <button 
-                                @click="editor.chain().focus().redo().run()"
-                                :disabled="!editor.can().chain().focus().redo().run()"
-                                class="p-1 disabled:text-gray-300"
-                                >
-                                Redo
-                            </button>
+                                <Undo class="size-4" />
+                                </button>
+                            </ToolTips>
+                            
+                            <ToolTips tooltip="redo">
+                                <button 
+                                    @click="editor.chain().focus().redo().run()"
+                                    :disabled="!editor.can().chain().focus().redo().run()"
+                                    class="p-1 disabled:text-gray-300"
+                                    >
+                                    <Redo class="size-4" />
+                                </button>
+                           </ToolTips>
 
                         </section>
                         <EditorContent :editor="editor" />

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MyJobController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -10,6 +11,10 @@ Route::get('/', function () {
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('jobs');
+
+Route::post('/', function(Request $request){
+    dd($request->all());
+});
 
 Route::get('/job/post-a-job', [MyJobController::class, 'create'])->name('job.create');
 

@@ -30,8 +30,7 @@
         delay: 2000,
         stopOnMouseEnter: true,
         stopOnInteraction: false,
-        });
-
+    });
     
 </script>
 <template>

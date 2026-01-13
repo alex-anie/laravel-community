@@ -1,40 +1,65 @@
 <script setup lang="ts">
-import CenterContent from '@/components/custom/CenterContent.vue';
-import Error from '@/components/custom/input/Error.vue';
-import InputTag from '@/components/custom/input/InputTag.vue';
-import Label from '@/components/custom/input/Label.vue';
-import Option from '@/components/custom/input/Option.vue';
-import MyEditor from '@/components/custom/MyEditor.vue';
-import { useForm } from '@inertiajs/vue3';
-import { ImageUp } from 'lucide-vue-next';
-import NavLayouts from '@/layouts/NavLayouts.vue';
-import { ref } from 'vue';
-import SelectTag from '@/components/custom/input/SelectTag.vue';
-import OptionTag from '@/components/custom/input/OptionTag.vue';
-
+    import CenterContent from '@/components/custom/CenterContent.vue';
+    import Error from '@/components/custom/input/Error.vue';
+    import InputTag from '@/components/custom/input/InputTag.vue';
+    import Label from '@/components/custom/input/Label.vue';
+    import Option from '@/components/custom/input/Option.vue';
+    import MyEditor from '@/components/custom/MyEditor.vue';
+    import { useForm } from '@inertiajs/vue3';
+    import { ImageUp } from 'lucide-vue-next';
+    import NavLayouts from '@/layouts/NavLayouts.vue';
+    import { ref } from 'vue';
 
 // props
 
+
 // Variables
 const open = ref(false);
-const fileName = ref<string | null>(null);
+// const fileName = ref<string | null>(null);
 const selected = ref<string[]>([]);
 
 const minCurrencyValue = ref<number>(0);
 const maxCurrencyValue = ref<number>(0);
-const currencySymbol = ref<string | null>(null);
+
+const form = useForm<{
+    job_title: string,
+    content: string,
+    company_url: string,
+    company_name: string,
+    application_url: string,
+    company_logo: File | null,
+    location: string,
+    min_currency_value: number,
+    max_currency_value: number,
+    language_tags: string[]
+}>({
+    job_title: '',
+    content: "<h2>Job Description</h2><p>Write your job description here...</p>",
+    company_url: '',
+    company_name: '',
+    application_url: '',
+    company_logo: null as File | null,
+    location: '',
+    min_currency_value: 0,
+    max_currency_value: 0,
+    language_tags: []
+});
+
 
 // FUNCTIONS 
 /* return the file name of an upload image*/
-const handleFileName = (e: Event): void =>{
-    const target = e.target as HTMLInputElement
-    fileName.value = target.files?.[0]?.name ?? null
+const handleFile = (event: Event): void =>{
+    const files = (event.target as HTMLInputElement).files;
+    if(files && files[0]){
+        form.company_logo = files[0]
+    }
 }
 
 // arrays
 const tags = [
     'Laravel',
     'PHP',
+    'Symfony',
     'MySQL',
     'REST APIs',
     'Vue.js',
@@ -45,6 +70,25 @@ const tags = [
     'Git',
     'Docker',
     'Linux',
+    'Node.js',
+    'Express.js',
+    'NestJS',
+    'Python',
+    'Django',
+    'FastAPI',
+    'Flask',
+    'Java',
+    'Spring Boot',
+    'C#',
+    'ASP.NET Core',
+    'ASP.NET MVC',
+    'Go',
+    'Gin',
+    'Fiber',
+    'Ruby',
+    'Ruby on Rails',
+    'Rust',
+    'Actix Web'
 ]
 
 const toggleTag = (tag: string)=> {
@@ -53,19 +97,14 @@ const toggleTag = (tag: string)=> {
     } else if (selected.value.length < 5){
         selected.value.push(tag)
     }
+
+    form.language_tags = [...selected.value]
 }
 
 const isDisabled = (tag: string)=> {
     return selected.value.length >= 5 && !selected.value.includes(tag)
 }
 
-const form = useForm<{
-    title: string,
-    content: string
-}>({
-    title: '',
-    content: "<h1>Heading here</h1><p>I'm running Tiptap with Vue.js. 🎉</p>"
-});
 
 function submitForm(){
     form.post('/', {
@@ -92,77 +131,68 @@ function submitForm(){
                                 <Label for="jobTitle" content="Example: 'Senior Laravel Developer', 'Software Engineer'">
                                     <Option content="(required)" />
                                 </Label>
-                                <InputTag id="jobTitle" type="text" placeholder="Job Title" v-model="form.title"/>
-                                <Error content="" />
+                                <InputTag id="jobTitle" type="text" placeholder="Job Title" v-model="form.job_title"/>
+                                <Error :content="`${form.errors.job_title}`" />
                             </div>
                             
                             <MyEditor v-model="form.content" />
+                            <Error :content="`${form.errors.content}`" />
 
                             <div class="">
                                 <Label class="sr-only" for="companyName" content="company name'"></Label>
-                                <InputTag id="companyName" type="text" placeholder="Company Name" v-model="form.title"/>
-                                <Error content="" />
+                                <InputTag id="companyName" type="text" placeholder="Company Name" v-model="form.company_name"/>
+                                <Error :content="`${form.errors.company_name }`" />
                             </div>
 
                             <div class="">
                                 <Label for="companyUrl" content="Please use https:// or http:// in the beginning of the URL, for example: https://yourcompany.com">
                                     <Option content="(required)" />
                                 </Label>
-                                <InputTag id="companyUrl" type="text" placeholder="Company Url" v-model="form.title"/>
-                                <Error content="" />
+                                <InputTag id="companyUrl" type="text" placeholder="Company Url" v-model="form.company_url"/>
+                                <Error :content="`${form.errors.company_url}`" />
                             </div>
 
                             <div class="">
                                 <Label for="applicationUrl" content="Add application url, eg. https://yourcompany.com/careers">
                                     <Option content="(required)" />
                                 </Label>
-                                <InputTag id="applicationUrl" type="text" placeholder="Application Url" v-model="form.title"/>
-                                <Error content="" />
+                                <InputTag id="applicationUrl" type="text" placeholder="Application Url" v-model="form.application_url"/>
+                                <Error :content="`${form.errors.application_url}`" />
                             </div>
 
                             <div>
-                                <label  class="flex gap-x-3 justify-center w-full py-2 cursor-pointer border-2 border-red-600 border-dotted" for="companyLogo">
-                                    <ImageUp class="text-red-600"/> <span class="font-mono">{{ fileName  ? fileName : 'Add a Company Logo' }}</span>
+                                <label class="flex gap-x-3 justify-center w-full py-2 cursor-pointer border-2 border-red-600 border-dotted" for="companyLogo">
+                                    <ImageUp class="text-red-600"/> <span class="font-mono">{{ form.company_logo  ? form.company_logo.name : 'Add a Company Logo' }}</span>
                                 </label>
-                                <input @change="handleFileName" type="file" id="companyLogo" name="company_logo" class="hidden" accept=".png,.jpg">
+                                <input @change="handleFile" type="file" id="companyLogo" name="company_logo" class="hidden" accept=".png,.jpg">
+                                <Error :content="`${form.errors.company_logo}`" />
                             </div>
 
                             <div class="">
                                 <Label for="location" content="We recommend Remote. If you restrict your job to a location, you will get 10x-20x less applicants">
                                     <Option content="(required)" />
                                 </Label>
-                                <InputTag id="location" type="text" placeholder="Job Location" v-model="form.title"/>
-                                <Error content="" />
+                                <InputTag id="location" type="text" placeholder="Job Location" v-model="form.location"/>
+                                <Error :content="`${form.errors.location}`" />
                             </div>
 
                             <div class="">
-                                <Label content="Examples: $120,000 – $145,000 USD, €80,000 — €102,000">
+                                <Label content="Examples: $120,000 – $145,000 USD">
                                     <Option content="(required)" />
                                 </Label>
 
-                                <div class="flex gap-x-3">
-                                    <InputTag v-model.number="minCurrencyValue" type="number" name="min_salary" placeholder="10000" min="10000" max="500000" />
-                                    <InputTag v-model.number="maxCurrencyValue" type="number" name="max_salary" placeholder="50000" min="10000" max="500000" />
-
-                                    <SelectTag v-model="currencySymbol" name="currency" id="">
-                                        <OptionTag value="" content="Select Country Currency" />
-                                        <OptionTag value="$" content="United States Dollar (USD): $" />
-                                        <OptionTag value="€" content="Euro (EUR): €" />
-                                        <OptionTag value="£" content="British Pound Sterling (GBP): £" />
-                                        <OptionTag value="¥" content="Japanese Yen (JPY): ¥" />
-                                        <OptionTag value="¥" content="Chinese Yuan (CNY): ¥" />
-                                        <OptionTag value="元" content="Chinese renminbi (RMB): 元" />
-                                        <OptionTag value="₹" content="Indian Rupee (INR): ₹" />
-                                        <OptionTag value="₽" content="Russian Ruble (RUB): ₽" />
-                                        <OptionTag value="₩" content="Korean Won (KRW): ₩" />
-                                        <OptionTag value="₱" content="Philippine Peso (PHP): ₱" />
-                                        <OptionTag value="₺" content="Turkish Lira (TRY): ₺" />
-                                        <OptionTag value="₦" content="Nigerian Naira (NGN): ₦" />
-                                    </SelectTag>
+                                <div class="w-full flex justify-between gap-x-3">
+                                    <span class="w-full">
+                                        <InputTag v-model.number="form.min_currency_value" type="number" name="min_salary" :placeholder="`$${new Intl.NumberFormat().format('10000')}`" min="10000" max="500000" />
+                                        <Error :content="`${form.errors.min_currency_value}`" class="" />
+                                    </span>
+                                    <span class="w-full">
+                                        <InputTag v-model.number="form.max_currency_value" type="number" name="max_salary" :placeholder="`$${new Intl.NumberFormat().format('50000')}`" min="10000" max="500000" />
+                                        <Error :content="`${form.errors.max_currency_value}`" class=""/>
+                                    </span>
                                 </div>
-                                <p class="font-mono text-sm">preview: {{ currencySymbol ?? '' }} {{ minCurrencyValue }} - {{ maxCurrencyValue }}</p>
+                                <p class="font-mono text-sm text-neutral-400">preview: {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(minCurrencyValue) }} - {{  new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(maxCurrencyValue)  }}</p>
 
-                                <Error content="" />
                             </div>
 
                             <div class="w-full max-w-md space-y-2">
@@ -194,7 +224,8 @@ function submitForm(){
                                 </div>
 
                                 <!-- Hidden input for Laravel -->
-                                <input type="hidden" name="tags" :value="selected.join(',')">
+                                <input type="hidden" name="language_tags" :value="selected.join(',')">
+                                <Error :content="`${form.errors.language_tags}`" />
                             </div>
 
                             <div>

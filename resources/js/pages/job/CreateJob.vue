@@ -9,6 +9,8 @@
     import { ImageUp } from 'lucide-vue-next';
     import NavLayouts from '@/layouts/NavLayouts.vue';
     import { ref } from 'vue';
+import SelectTag from '@/components/custom/input/SelectTag.vue';
+import OptionTag from '@/components/custom/input/OptionTag.vue';
 
 // props
 
@@ -172,7 +174,17 @@ function submitForm(){
                                 <Label for="location" content="We recommend Remote. If you restrict your job to a location, you will get 10x-20x less applicants">
                                     <Option content="(required)" />
                                 </Label>
-                                <InputTag id="location" type="text" placeholder="Job Location" v-model="form.location"/>
+                                <SelectTag name="location" id="location" v-model="form.location">
+                                    <OptionTag value="" content="Select Location" />
+                                    <OptionTag value="Remote" content="Remote" />
+                                    <OptionTag value="FullTime" content="Full Time" />
+                                    <OptionTag value="PartTime" content="Part Time" />
+                                    <OptionTag value="Contract" content="Contract" />
+                                    <OptionTag value="Internship" content="Internship" />
+                                    <OptionTag value="Freelance" content="Freelance" />
+                                    <OptionTag value="OnSite" content="OnSite" />
+                                    <OptionTag value="Hybrid" content="Hybrid" />
+                                </SelectTag>
                                 <Error v-if="form.errors.location" :content="`${form.errors.location}`" />
                             </div>
 

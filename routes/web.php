@@ -6,17 +6,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return Inertia::render('Jobs', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('jobs');
-
-Route::post('/', function(Request $request){
-    dd($request->all());
-});
+Route::get('/', [MyJobController::class, 'index'])->name('jobs');
 
 Route::get('/job/post-a-job', [MyJobController::class, 'create'])->name('job.create');
+Route::post('/', [MyJobController::class, 'store'])->name('job.store');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

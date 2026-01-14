@@ -131,17 +131,17 @@ function submitForm(){
                                 <Label for="jobTitle" content="Example: 'Senior Laravel Developer', 'Software Engineer'">
                                     <Option content="(required)" />
                                 </Label>
-                                <InputTag id="jobTitle" type="text" placeholder="Job Title" v-model="form.job_title"/>
-                                <Error :content="`${form.errors.job_title}`" />
+                                <InputTag name="job_title" id="jobTitle" type="text" placeholder="Job Title" v-model="form.job_title"/>
+                                <Error v-if="form.errors.job_title" :content="`${form.errors.job_title}`" />
                             </div>
                             
                             <MyEditor v-model="form.content" />
-                            <Error :content="`${form.errors.content}`" />
+                            <Error v-if="form.errors.content" :content="`${form.errors.content}`" />
 
                             <div class="">
                                 <Label class="sr-only" for="companyName" content="company name'"></Label>
                                 <InputTag id="companyName" type="text" placeholder="Company Name" v-model="form.company_name"/>
-                                <Error :content="`${form.errors.company_name }`" />
+                                <Error v-if="form.errors.company_name" :content="`${form.errors.company_name }`" />
                             </div>
 
                             <div class="">
@@ -149,7 +149,7 @@ function submitForm(){
                                     <Option content="(required)" />
                                 </Label>
                                 <InputTag id="companyUrl" type="text" placeholder="Company Url" v-model="form.company_url"/>
-                                <Error :content="`${form.errors.company_url}`" />
+                                <Error v-if="form.errors.company_url" :content="`${form.errors.company_url}`" />
                             </div>
 
                             <div class="">
@@ -157,7 +157,7 @@ function submitForm(){
                                     <Option content="(required)" />
                                 </Label>
                                 <InputTag id="applicationUrl" type="text" placeholder="Application Url" v-model="form.application_url"/>
-                                <Error :content="`${form.errors.application_url}`" />
+                                <Error v-if="form.errors.application_url" :content="`${form.errors.application_url}`" />
                             </div>
 
                             <div>
@@ -165,7 +165,7 @@ function submitForm(){
                                     <ImageUp class="text-red-600"/> <span class="font-mono">{{ form.company_logo  ? form.company_logo.name : 'Add a Company Logo' }}</span>
                                 </label>
                                 <input @change="handleFile" type="file" id="companyLogo" name="company_logo" class="hidden" accept=".png,.jpg">
-                                <Error :content="`${form.errors.company_logo}`" />
+                                <Error v-if="form.errors.company_logo" :content="`${form.errors.company_logo}`" />
                             </div>
 
                             <div class="">
@@ -173,7 +173,7 @@ function submitForm(){
                                     <Option content="(required)" />
                                 </Label>
                                 <InputTag id="location" type="text" placeholder="Job Location" v-model="form.location"/>
-                                <Error :content="`${form.errors.location}`" />
+                                <Error v-if="form.errors.location" :content="`${form.errors.location}`" />
                             </div>
 
                             <div class="">
@@ -184,11 +184,11 @@ function submitForm(){
                                 <div class="w-full flex justify-between gap-x-3">
                                     <span class="w-full">
                                         <InputTag v-model.number="form.min_currency_value" type="number" name="min_salary" :placeholder="`$${new Intl.NumberFormat().format('10000')}`" min="10000" max="500000" />
-                                        <Error :content="`${form.errors.min_currency_value}`" class="" />
+                                        <Error v-if="form.errors.min_currency_value" :content="`${form.errors.min_currency_value}`" class="" />
                                     </span>
                                     <span class="w-full">
                                         <InputTag v-model.number="form.max_currency_value" type="number" name="max_salary" :placeholder="`$${new Intl.NumberFormat().format('50000')}`" min="10000" max="500000" />
-                                        <Error :content="`${form.errors.max_currency_value}`" class=""/>
+                                        <Error v-if="form.errors.max_currency_value" :content="`${form.errors.max_currency_value}`" class=""/>
                                     </span>
                                 </div>
                                 <p class="font-mono text-sm text-neutral-400">preview: {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(minCurrencyValue) }} - {{  new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(maxCurrencyValue)  }}</p>
@@ -225,7 +225,7 @@ function submitForm(){
 
                                 <!-- Hidden input for Laravel -->
                                 <input type="hidden" name="language_tags" :value="selected.join(',')">
-                                <Error :content="`${form.errors.language_tags}`" />
+                                <Error v-if="form.errors.language_tags" :content="`${form.errors.language_tags}`" />
                             </div>
 
                             <div>

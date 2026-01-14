@@ -5,12 +5,12 @@
     import Label from '@/components/custom/input/Label.vue';
     import Option from '@/components/custom/input/Option.vue';
     import MyEditor from '@/components/custom/MyEditor.vue';
-    import { useForm } from '@inertiajs/vue3';
-    import { ImageUp } from 'lucide-vue-next';
+    import { useForm, Link } from '@inertiajs/vue3';
+    import { ImageUp, MoveLeft } from 'lucide-vue-next';
     import NavLayouts from '@/layouts/NavLayouts.vue';
     import { ref } from 'vue';
-import SelectTag from '@/components/custom/input/SelectTag.vue';
-import OptionTag from '@/components/custom/input/OptionTag.vue';
+    import SelectTag from '@/components/custom/input/SelectTag.vue';
+    import OptionTag from '@/components/custom/input/OptionTag.vue';
 
 // props
 
@@ -19,9 +19,6 @@ import OptionTag from '@/components/custom/input/OptionTag.vue';
 const open = ref(false);
 // const fileName = ref<string | null>(null);
 const selected = ref<string[]>([]);
-
-const minCurrencyValue = ref<number>(0);
-const maxCurrencyValue = ref<number>(0);
 
 const form = useForm<{
     job_title: string,
@@ -107,10 +104,10 @@ const isDisabled = (tag: string)=> {
     return selected.value.length >= 5 && !selected.value.includes(tag)
 }
 
-
 function submitForm(){
     form.post('/', {
         preserveScroll: true,
+        preserveState: true,
         onSuccess: ()=> {
             alert('Form submission success!');
         }
@@ -121,6 +118,9 @@ function submitForm(){
 <template>
     <NavLayouts>
         <CenterContent>
+            <div class="my-2">
+                <Link class="flex gap-x-1 text-neutral-600 hover:text-neutral-800" href="/"> <MoveLeft /> <span>Back to Jobs</span></Link>
+            </div>
             <header>
                 <h1 class="font-mono text-2xl font-bold">Post a Job</h1>
             </header>
@@ -128,7 +128,7 @@ function submitForm(){
             <article>
                 <section>
                     <aside>
-                        <form @submit.prevent="submitForm" class="space-y-8" enctype="multipart/form-data">
+                        <form @submit.prevent="submitForm" @keydown.enter.prevent class="space-y-8" enctype="multipart/form-data">
                             <div class="">
                                 <Label for="jobTitle" content="Example: 'Senior Laravel Developer', 'Software Engineer'">
                                     <Option content="(required)" />
@@ -203,7 +203,7 @@ function submitForm(){
                                         <Error v-if="form.errors.max_currency_value" :content="`${form.errors.max_currency_value}`" class=""/>
                                     </span>
                                 </div>
-                                <p class="font-mono text-sm text-neutral-400">preview: {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(minCurrencyValue) }} - {{  new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(maxCurrencyValue)  }}</p>
+                                <p class="font-mono text-sm text-neutral-400">preview: {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(form.min_currency_value) }} - {{  new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(form.max_currency_value)  }}</p>
 
                             </div>
 

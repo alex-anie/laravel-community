@@ -5,6 +5,8 @@
     import NavLayouts from '@/layouts/NavLayouts.vue';
     import { Link } from '@inertiajs/vue3';
     import { MapPin, Banknote, Calendar } from 'lucide-vue-next';
+
+    
 </script>
 <template>
     <NavLayouts>

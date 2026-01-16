@@ -166,7 +166,7 @@ function submitForm(){
                                 <label class="flex gap-x-3 justify-center w-full py-2 cursor-pointer border-2 border-red-600 border-dotted" for="companyLogo">
                                     <ImageUp class="text-red-600"/> <span class="font-mono">{{ form.company_logo  ? form.company_logo.name : 'Add a Company Logo' }}</span>
                                 </label>
-                                <input @change="handleFile" type="file" id="companyLogo" name="company_logo" class="hidden" accept=".png,.jpg">
+                                <input @change="handleFile" type="file" id="companyLogo" name="company_logo" class="hidden" accept=".png,.jpg,.jpeg">
                                 <Error v-if="form.errors.company_logo" :content="`${form.errors.company_logo}`" />
                             </div>
 

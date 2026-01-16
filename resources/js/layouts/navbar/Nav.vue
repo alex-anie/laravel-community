@@ -6,7 +6,7 @@ import NavLink from './NavLink.vue';
 
 withDefaults(
     defineProps<{
-        canRegister: boolean;
+        canRegister?: boolean;
     }>(),
     {
         canRegister: true,

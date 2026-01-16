@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\MyJob;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 class MyJobController extends Controller
 {   
 
     public function index(Request $request){
         $jobs = MyJob::query()
-            ->where($request->search, function($query, $search){
+            ->when($request->search, function($query, $search){
                 $query->where('job_title', 'like', "%{$search}%");
             })
                 ->orderBy("id", "desc")
@@ -21,7 +20,7 @@ class MyJobController extends Controller
                 ->through(fn($job)=>[
                     "id" => $job->id,
                     "job_title" => $job->job_title,
-                    "company_name" => $job->company_logo,
+                    "company_name" => $job->company_name,
                     "company_url" => $job->company_url,
                     "company_logo" => $job->company_logo,
                     "location" => $job->location,
@@ -32,11 +31,10 @@ class MyJobController extends Controller
                     "updated_at" => $job->updated_at
                 ]);
 
-            return Inertia::render('Jobs', [
-                'jobs' => $jobs,
-                'filters' => $request->only(['search']),
-                'canRegister' => Features::enabled(Features::registration()),
-            ]);
+        return Inertia::render('Jobs', [
+            'jobs' => $jobs,
+            'filters' => $request->only(['search']),
+        ]);
     }
     public function create(){
         return Inertia::render('job/CreateJob');
@@ -52,7 +50,7 @@ class MyJobController extends Controller
             'company_url' => ['required', 'url'],
             'application_url' => ['required', 'url'],
 
-            'company_logo' => ['nullable', 'image', 'mimes:jpg,png', 'max:2048'],
+            'company_logo' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
             'location' => ['required', 'string'],
 
             'min_currency_value' => ['required', 'integer', 'min:10000', 'max:500000'],

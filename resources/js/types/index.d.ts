@@ -36,4 +36,20 @@ export interface User {
     updated_at: string;
 }
 
+export interface MyJobs {
+    id: number,
+    job_title: string,
+    content: string,
+    company_name: string,
+    company_url: string,
+    application_url: string,
+    company_logo: string,
+    location: string,
+    min_currency_value: number,
+    max_currency_value: number,
+    language_tags: string[],
+    created_at: string;
+    updated_at: string;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;

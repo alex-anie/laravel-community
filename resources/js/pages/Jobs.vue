@@ -3,10 +3,31 @@
     import CenterContent from '@/components/custom/CenterContent.vue';
     import LanguageTag from '@/components/custom/LanguageTag.vue';
     import NavLayouts from '@/layouts/NavLayouts.vue';
-    import { Link } from '@inertiajs/vue3';
+    import { MyJobs } from '@/types';
+    import { Link, router } from '@inertiajs/vue3';
     import { MapPin, Banknote, Calendar } from 'lucide-vue-next';
+    import { ref, watch } from 'vue';
 
-    
+    const props = defineProps<{
+        jobs: {
+            data: Array<MyJobs>
+            links: Array<{url: string | null; label: string; active: boolean}>
+            filters?:{
+                search?:string
+            }
+        }
+    }>();
+
+    const search = ref(props.jobs.filters?.search || '');
+
+    watch(search, (value)=>{
+        router.get('', {search: value}, 
+            {
+                preserveState: true,
+                replace: true,
+            }
+        )
+    })
 </script>
 <template>
     <NavLayouts>
@@ -40,25 +61,27 @@
             <article>
                 <section class="border border-neutral-200 p-2">
                     <aside class="grid grid-cols-4">
-                        <Link href="" class="border border-red-600 col-span-2 p-2">
+                        <Link v-for="job in props.jobs.data" :key="job.id" href="" class="border border-red-600 col-span-2 p-2">
                             <div class="relative flex gap-x-2">
                                 <div class="size-15">
-                                    <img class="size-full object-cover object-center" src="/deadpool-sword.jpg" alt="">
+                                    <img class="size-full object-cover object-center" 
+                                        :src="`/storage/${job.company_logo}`" 
+                                        :alt="`${job.company_name} logo`">
                                 </div>
                                 <div>
-                                    <h2 class="font-mono text-red-600 text-[12px]">Jet Brains</h2>
-                                    <h1 class="font-mono font-bold">PHP Laravel Developer (French or German speaker)</h1>
+                                    <h2 class="font-mono text-red-600 text-[12px]">{{ job.company_name }}</h2>
+                                    <h1 class="font-mono font-bold">{{ job.job_title }}</h1>
                                     <div class="flex gap-x-2">
                                         <div class="absolute top-0 right-4 flex">
                                             <p class="">
                                                 <Banknote class="w-3 inline-block text-neutral-500" />
-                                                <span class="text-[10px] text-neutral-900">$30,000 - $50,000 USD</span>
+                                                <span class="text-[10px] text-neutral-900">{{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.min_currency_value) }}  - {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.max_currency_value) }} </span>
                                             </p>
                                         </div>
 
                                         <p>
                                             <MapPin class="w-3 inline-block text-neutral-500" />
-                                            <span class="text-[12px] text-neutral-500"> Remote / Munish, German</span>
+                                            <span class="text-[12px] text-neutral-500"> {{ job.location }} / Munish, German</span>
                                         </p>
                                         <p>
                                             <Calendar class="w-3 inline-block text-neutral-500" />
@@ -69,12 +92,7 @@
                             </div>
 
                             <div class="flex gap-x-2 mt-2">
-                                <LanguageTag>Laravel</LanguageTag>
-                                <LanguageTag>PHP</LanguageTag>
-                                <LanguageTag>MySQL</LanguageTag>
-                                <LanguageTag>Vuejs</LanguageTag>
-                                <LanguageTag>Fullstack</LanguageTag>
-                                <LanguageTag>backend</LanguageTag>
+                                <LanguageTag v-for="tag in job.language_tags" :key="tag">{{ tag }}</LanguageTag>
                             </div>
                         </Link>
 

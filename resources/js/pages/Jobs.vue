@@ -7,6 +7,7 @@
     import { Link, router } from '@inertiajs/vue3';
     import { MapPin, Banknote, Calendar } from 'lucide-vue-next';
     import { ref, watch } from 'vue';
+    import MyJobController from '@/actions/App/Http/Controllers/MyJobController';
 
     const props = defineProps<{
         jobs: {
@@ -61,12 +62,13 @@
 
         return 'now';
     }
+
 </script>
 <template>
     <NavLayouts>
         <CenterContent>
             <!-- Hero -->
-            <section class=" flex flex-col items-center">
+            <section class="flex flex-col items-center">
                 <div>
                     <h1 class="text-4xl font-mono font-bold mt-8">The Best Laravel Job Listing</h1>
                 </div>
@@ -94,8 +96,15 @@
             <article>
                 <section class="border border-neutral-200 p-2">
                     <aside class="flex gap-y-4">
+                        <!-- Left Panel - Job List -->
                         <div class="w-[30rem]">
-                            <Link v-for="job in props.jobs.data" :key="job.id" preserve-state replace href="" class="block border border-red-600 p-2">
+                            <Link v-for="job in props.jobs.data" 
+                                :key="job.id" 
+                                preserve-state
+                                preserve-scroll
+                                replace 
+                                :href="`/?job=${job.id}`" 
+                                class="block border border-red-600 p-2">
                             <div class="relative flex gap-x-2">
                                 <div class="size-15">
                                     <img class="size-full object-cover object-center" 
@@ -131,9 +140,10 @@
                         </Link>
                         </div>
 
+                        <!-- Right Panel - Job List -->
                         <div class="flex-1 border border-red-600">
                             <main v-if="selectedJob" :job="selectedJob">
-                                <p>This is a dynamic content</p>
+                                <p>{{ selectedJob.company_name }}</p>
                             </main>
                             <div v-else class="">
                                 select a job to view details

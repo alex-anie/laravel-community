@@ -22,6 +22,7 @@ class MyJobController extends Controller
             'jobs' => $jobs->through(fn($job)=>[
                 "id" => $job->id,
                 "job_title" => $job->job_title,
+                "content" => $job->content,
                 "company_name" => $job->company_name,
                 "company_url" => $job->company_url,
                 "company_logo" => $job->company_logo,
@@ -34,7 +35,20 @@ class MyJobController extends Controller
             ]),
 
             'selectedJob' => $request->job
-                ? MyJob::find($request->job)
+                ? MyJob::select([
+                    "id",
+                    "job_title",
+                    "content",
+                    "company_name",
+                    "company_url",
+                    "company_logo",
+                    "location",
+                    "min_currency_value",
+                    "max_currency_value",
+                    "language_tags",
+                    "created_at",
+                    "updated_at",
+                ])->find($request->job)
                 : null,
 
             'filters' => $request->only(['search']),

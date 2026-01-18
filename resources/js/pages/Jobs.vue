@@ -15,8 +15,11 @@
             filters?:{
                 search?:string
             }
-        }
+        },
+
+        selectedJob: MyJobs | null
     }>();
+
 
     const search = ref(props.jobs.filters?.search || '');
 
@@ -28,6 +31,36 @@
             }
         )
     })
+
+    function timeAgo(date: string){
+        const now = new Date();
+        const past = new Date(date);
+        const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);
+
+        if(diffInSeconds < 60){
+            return 'now';
+        }
+
+        const units: [Intl.RelativeTimeFormatUnit, number][] = [
+            ['year', 60 * 60 * 24 * 365],
+            ['month', 60 * 60 * 24 * 30],
+            ['week', 60 * 60 * 24 * 7],
+            ['day', 60 * 60 * 24],
+            ['hour', 60 * 60],
+            ['minute', 60],
+        ];
+
+        const rtf = new Intl.RelativeTimeFormat('en', {numeric: 'auto'});
+
+        for(const [unit, seconds] of units){
+            const value = Math.floor(diffInSeconds / seconds);
+            if(value >= 1){
+                return rtf.format(-value, unit);
+            }
+        }
+
+        return 'now';
+    }
 </script>
 <template>
     <NavLayouts>
@@ -60,8 +93,9 @@
 
             <article>
                 <section class="border border-neutral-200 p-2">
-                    <aside class="grid grid-cols-4">
-                        <Link v-for="job in props.jobs.data" :key="job.id" href="" class="border border-red-600 col-span-2 p-2">
+                    <aside class="flex gap-y-4">
+                        <div class="w-[30rem]">
+                            <Link v-for="job in props.jobs.data" :key="job.id" preserve-state replace href="" class="block border border-red-600 p-2">
                             <div class="relative flex gap-x-2">
                                 <div class="size-15">
                                     <img class="size-full object-cover object-center" 
@@ -75,17 +109,17 @@
                                         <div class="absolute top-0 right-4 flex">
                                             <p class="">
                                                 <Banknote class="w-3 inline-block text-neutral-500" />
-                                                <span class="text-[10px] text-neutral-900">{{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.min_currency_value) }}  - {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.max_currency_value) }} </span>
+                                                <span class="text-[10px] font-mono text-neutral-900">{{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.min_currency_value) }}  - {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.max_currency_value) }} </span>
                                             </p>
                                         </div>
 
                                         <p>
                                             <MapPin class="w-3 inline-block text-neutral-500" />
-                                            <span class="text-[12px] text-neutral-500"> {{ job.location }} / Munish, German</span>
+                                            <span class="text-[12px] font-mono text-neutral-500"> {{ job.location }} | Munish, German |</span>
                                         </p>
                                         <p>
-                                            <Calendar class="w-3 inline-block text-neutral-500" />
-                                            <span class="text-[12px] text-neutral-500"> 2 days ago</span>
+                                            <Calendar class="w-3 mr-1 inline-block text-neutral-500" />
+                                            <span :title="new Date(job.created_at).toDateString()" class="text-[12px] text-neutral-500 font-mono">{{ timeAgo(job.created_at) }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -95,18 +129,23 @@
                                 <LanguageTag v-for="tag in job.language_tags" :key="tag">{{ tag }}</LanguageTag>
                             </div>
                         </Link>
+                        </div>
 
-                        <div class="col-span-2">
-                            Content
+                        <div class="flex-1 border border-red-600">
+                            <main v-if="selectedJob" :job="selectedJob">
+                                <p>This is a dynamic content</p>
+                            </main>
+                            <div v-else class="">
+                                select a job to view details
+                            </div>
                         </div>
                     </aside>
                 </section>
             </article>
         </CenterContent>
 
-
         <!-- Create Button -->
-            <div class="absolute bottom-12 right-10">
+            <div class="fixed bottom-12 right-10">
                 <Link href="/job/post-a-job" class="group relative py-2 px-3 border font-mono bg-red-600 hover:bg-amber-600 transition-colors duration-300 ease-in-out">
                     <span class="font-mono text-white group-hover:text-black">Post a job</span>
 

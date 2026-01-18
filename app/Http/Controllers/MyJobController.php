@@ -11,28 +11,32 @@ class MyJobController extends Controller
 
     public function index(Request $request){
         $jobs = MyJob::query()
-            ->when($request->search, function($query, $search){
-                $query->where('job_title', 'like', "%{$search}%");
-            })
-                ->orderBy("id", "desc")
+            ->when($request->search, fn($q, $search) =>
+                $q->where('job_title', 'like', "%{$search}%")
+            )
+                ->orderByDesc("id")
                 ->paginate(20)
-                ->withQueryString()
-                ->through(fn($job)=>[
-                    "id" => $job->id,
-                    "job_title" => $job->job_title,
-                    "company_name" => $job->company_name,
-                    "company_url" => $job->company_url,
-                    "company_logo" => $job->company_logo,
-                    "location" => $job->location,
-                    "min_currency_value" => $job->min_currency_value,
-                    "max_currency_value" => $job->max_currency_value,
-                    "language_tags" => $job->language_tags,
-                    "created_at" => $job->created_at,
-                    "updated_at" => $job->updated_at
-                ]);
+                ->withQueryString();
 
         return Inertia::render('Jobs', [
-            'jobs' => $jobs,
+            'jobs' => $jobs->through(fn($job)=>[
+                "id" => $job->id,
+                "job_title" => $job->job_title,
+                "company_name" => $job->company_name,
+                "company_url" => $job->company_url,
+                "company_logo" => $job->company_logo,
+                "location" => $job->location,
+                "min_currency_value" => $job->min_currency_value,
+                "max_currency_value" => $job->max_currency_value,
+                "language_tags" => $job->language_tags,
+                "created_at" => $job->created_at,
+                "updated_at" => $job->updated_at
+            ]),
+
+            'selectedJob' => $request->job
+                ? MyJob::find($request->job)
+                : null,
+
             'filters' => $request->only(['search']),
         ]);
     }
@@ -70,5 +74,9 @@ class MyJobController extends Controller
         MyJob::create($validated);
 
         return redirect()->route('jobs')->with('success', 'Job created Successfully');
+    }
+
+    public function show(MyJob $myJob){
+        return Inertia::render('Job', ['job' => $myJob]);
     }
 }

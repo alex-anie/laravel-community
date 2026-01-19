@@ -72,14 +72,10 @@ import FAQ from '@/components/custom/FAQ.vue';
             <!-- Hero -->
             <section class="flex flex-col items-center">
                 <div>
-                    <h1 class="text-4xl font-mono font-bold mt-8">The Best Laravel Job Listing</h1>
+                    <h1 class="text-4xl font-mono font-bold mt-8">Latest Tech Jobs</h1>
                 </div>
                 <div>
-                    <p class="font-mono text-center mt-8">find top Laravel jobs from job listing. Weather you’re a
-                        Senior, Junior, Entry Level Developer, Looking for remote, full-time,
-                        part-time, contract or onsite. Job listing provide jobs posts for Laravel
-                        developer of all levels. New jobs are added every few hours and you can stay
-                        updated via our newsletters and social media.</p>
+                    <p class="font-mono text-center mt-4">Connecting tech talent with opportunities. Find your next career move or discover the perfect candidate.</p>
                 </div>
             </section>
 
@@ -209,7 +205,7 @@ import FAQ from '@/components/custom/FAQ.vue';
         </CenterContent>
 
         <!-- Create Button -->
-            <div class="fixed bottom-12 right-10">
+            <div class="fixed bottom-30 right-10">
                 <Link href="/job/post-a-job" class="group relative py-2 px-3 border font-mono bg-red-600 hover:bg-amber-600 transition-colors duration-300 ease-in-out">
                     <span class="font-mono text-white group-hover:text-black">Post a job</span>
 

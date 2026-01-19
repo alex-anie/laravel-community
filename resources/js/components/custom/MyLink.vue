@@ -25,7 +25,7 @@ const resolvedHref = computed(() =>
     v-if="canShow"
     :href="resolvedHref"
     class="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full
-           bg-neutral-950 px-6 py-2 text-white transition-colors duration-300"
+          bg-neutral-950 px-6 py-2 text-white transition-colors duration-300"
   >
     <!-- animated background -->
     <span

@@ -1,0 +1,7 @@
+NAMES EXAMPLES:
+    1. jobber_rank
+
+IMPLEMENTATIONS:
+    1. add job_type: Fulltime (separate it from remote)
+    2. Add filter by Remote, Fulltime, and Tags
+    2. Add location eg: Logos, Nigeria

@@ -2,12 +2,12 @@
     import CarouselImg from '@/components/custom/CarouselImg.vue';
     import CenterContent from '@/components/custom/CenterContent.vue';
     import LanguageTag from '@/components/custom/LanguageTag.vue';
+import SubmitLink from '@/components/custom/SubmitLink.vue';
     import NavLayouts from '@/layouts/NavLayouts.vue';
     import { MyJobs } from '@/types';
     import { Link, router } from '@inertiajs/vue3';
-    import { MapPin, Banknote, Calendar } from 'lucide-vue-next';
+    import { MapPin, Banknote, Calendar, ExternalLinkIcon, Database } from 'lucide-vue-next';
     import { ref, watch } from 'vue';
-    import MyJobController from '@/actions/App/Http/Controllers/MyJobController';
 
     const props = defineProps<{
         jobs: {
@@ -33,6 +33,7 @@
         )
     })
 
+    // Time and days format
     function timeAgo(date: string){
         const now = new Date();
         const past = new Date(date);
@@ -97,21 +98,27 @@
                 <section class="border border-neutral-200 p-2">
                     <aside class="flex gap-y-4">
                         <!-- Left Panel - Job List -->
-                        <div class="w-[30rem]">
+                        <div class="w-[30rem] max-h-screen overflow-y-auto">
                             <Link v-for="job in props.jobs.data" 
                                 :key="job.id" 
                                 preserve-state
                                 preserve-scroll
                                 replace 
                                 :href="`/?job=${job.id}`" 
-                                class="block border border-red-600 p-2">
+                                :class="[
+                                    'block border p-2 transition-colors', 
+                                    selectedJob?.id === job.id 
+                                        ? 'border-red-600 bg-red-50'
+                                        : 'border-neutral-300 hover:border-red-400'
+
+                                ]">
                             <div class="relative flex gap-x-2">
                                 <div class="size-15">
                                     <img class="size-full object-cover object-center" 
                                         :src="`/storage/${job.company_logo}`" 
                                         :alt="`${job.company_name} logo`">
                                 </div>
-                                <div>
+                                <div class="flex-1">
                                     <h2 class="font-mono text-red-600 text-[12px]">{{ job.company_name }}</h2>
                                     <h1 class="font-mono font-bold">{{ job.job_title }}</h1>
                                     <div class="flex gap-x-2">
@@ -141,12 +148,37 @@
                         </div>
 
                         <!-- Right Panel - Job List -->
-                        <div class="flex-1 border border-red-600">
-                            <main v-if="selectedJob" :job="selectedJob">
-                                <p>{{ selectedJob.company_name }}</p>
+                        <div class="flex-1 border border-red-600 sticky top-4 h-fit max-h-screen overflow-y-auto">
+                            <main v-if="selectedJob" :job="selectedJob" class="">
+                                <header class="bg-neutral-900 p-2">
+                                    <div class="flex">
+                                        <div class="size-18 bg-white p-1">
+                                            <img class="w-full object-cover object-center" :src="`/storage/${selectedJob.company_logo}`" :alt="`${selectedJob.company_name} logo`">
+                                        </div> 
+                                        <div class="pl-1">
+                                            <p class="font-mono text-neutral-100 text-sm">{{ selectedJob.company_name }}</p>
+                                            <p class="font-mono font-bold my-1 text-red-600">{{ selectedJob.job_title }}</p>
+                                            <div class="flex gap-x-2">
+                                                <p class="text-sm font-mono text-neutral-100"> <MapPin class="size-4 inline-block text-neutral-100" />Berlin, German |</p>
+                                                <a :href="selectedJob.company_url" target="_blank" class="font-mono text-sm text-neutral-100 hover:underline hover:text-red-300">Visit Company website <ExternalLinkIcon class="size-3 inline-block" /></a>
+                                            </div>
+                                        </div>
+                    
+                                    </div>
+                                        <SubmitLink :href="selectedJob.application_url" content="Apply to this Job" />
+                                </header>
+                                <article class="">
+                                    <aside class="my-4 px-4 prose prose-neutral max-w-none prose-headings:font-mono prose-p:font-mono prose-p:leading-relaxed whitespace-normal" v-html="selectedJob.content" />
+                                    <div>
+                                        <SubmitLink :href="selectedJob.application_url" content="Apply to this Job" />
+                                    </div>
+                                </article>
                             </main>
-                            <div v-else class="">
-                                select a job to view details
+                            <div v-else class="flex item-center justify-center h-64 text-neutral-500">
+                                <div class="flex justify-center flex-col items-center">
+                                    <Database class="text-center" />
+                                    <p class="text-center"> select a job to view details</p>
+                                </div>
                             </div>
                         </div>
                     </aside>

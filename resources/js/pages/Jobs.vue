@@ -1,8 +1,9 @@
 <script setup lang="ts">
     import CarouselImg from '@/components/custom/CarouselImg.vue';
     import CenterContent from '@/components/custom/CenterContent.vue';
+import FAQ from '@/components/custom/FAQ.vue';
     import LanguageTag from '@/components/custom/LanguageTag.vue';
-import SubmitLink from '@/components/custom/SubmitLink.vue';
+    import SubmitLink from '@/components/custom/SubmitLink.vue';
     import NavLayouts from '@/layouts/NavLayouts.vue';
     import { MyJobs } from '@/types';
     import { Link, router } from '@inertiajs/vue3';
@@ -183,6 +184,27 @@ import SubmitLink from '@/components/custom/SubmitLink.vue';
                         </div>
                     </aside>
                 </section>
+
+                <!-- Pagination -->
+                    <div class="my-4">
+                        <Link
+                            v-for="link in props.jobs.links"
+                            :key="link.label"
+                            :link="link.label"
+                            :href="link.url ?? ''"
+                            v-html="link.label"
+                            class="px-3 py-1 border"
+                            :class="{
+                                'bg-red-600 text-white' : link.active,
+                                'text-neutral-500 cursor-not-allowed' : !link.url
+                            }"
+                        />
+                    </div>
+            </article>
+
+            <!-- FAQs -->
+            <article>
+                <FAQ />
             </article>
         </CenterContent>
 

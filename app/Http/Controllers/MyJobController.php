@@ -15,7 +15,7 @@ class MyJobController extends Controller
                 $q->where('job_title', 'like', "%{$search}%")
             )
                 ->orderByDesc("id")
-                ->paginate(20)
+                ->paginate(10)
                 ->withQueryString();
 
         return Inertia::render('Jobs', [

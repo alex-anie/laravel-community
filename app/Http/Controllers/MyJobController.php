@@ -95,4 +95,8 @@ class MyJobController extends Controller
     public function show(MyJob $myJob){
         return Inertia::render('Job', ['job' => $myJob]);
     }
+
+    public function about(){
+        return Inertia::render('About');
+    }
 }

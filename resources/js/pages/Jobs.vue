@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import CarouselImg from '@/components/custom/CarouselImg.vue';
     import CenterContent from '@/components/custom/CenterContent.vue';
-import FAQ from '@/components/custom/FAQ.vue';
+    import FAQ from '@/components/custom/FAQ.vue';
     import LanguageTag from '@/components/custom/LanguageTag.vue';
     import SubmitLink from '@/components/custom/SubmitLink.vue';
     import NavLayouts from '@/layouts/NavLayouts.vue';

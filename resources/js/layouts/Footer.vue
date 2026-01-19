@@ -1,8 +1,8 @@
 <script setup lang="ts">
     import LinkedIn from '@/components/custom/svgs/LinkedIn.vue';
-import X from '@/components/custom/svgs/X.vue';
-import { Link } from '@inertiajs/vue3';
-    import { Twitter, Linkedin, Mail, Code } from 'lucide-vue-next';
+    import X from '@/components/custom/svgs/X.vue';
+    import { Link } from '@inertiajs/vue3';
+    import {  Mail } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -130,7 +130,8 @@ import { Link } from '@inertiajs/vue3';
                         <span class="font-mono text-sm">Created by</span>
                         <div class="flex items-center gap-2">
                             <div class="size-6 bg-red-600 rounded-full flex items-center justify-center group-hover:bg-red-500 transition-colors duration-200">
-                                <Code class="size-4 text-white" />
+                                <!-- <Code class="size-4 text-white" /> -->
+                                <img class="size-full object-center object-cover rounded-full" src="/images/local/alexanie.jpg" />
                             </div>
                             <span class="font-mono text-sm font-semibold">alexanie</span>
                         </div>

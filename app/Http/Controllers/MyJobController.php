@@ -96,7 +96,4 @@ class MyJobController extends Controller
         return Inertia::render('Job', ['job' => $myJob]);
     }
 
-    public function about(){
-        return Inertia::render('About');
-    }
 }

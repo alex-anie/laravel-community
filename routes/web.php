@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\IndependentController;
 use App\Http\Controllers\MyJobController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [MyJobController::class, 'index'])->name('jobs');
-Route::get('/about-us', [MyJobController::class, 'about'])->name('abput');
-// Route::view('/about-us', 'About')->name('about');
+Route::get('/about-us', [IndependentController::class, 'about'])->name('abput');
 
 Route::get('/job/post-a-job', [MyJobController::class, 'create'])->name('job.create');
 Route::post('/', [MyJobController::class, 'store'])->name('job.store');

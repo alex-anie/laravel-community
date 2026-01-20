@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Asimovian&family=Cal+Sans&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Zen+Dots&display=swap');
+
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
@@ -6,6 +8,7 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -13,6 +16,8 @@
         Instrument Sans, ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+
+    --cal-sans: Cal Sans, ui-sans-serif, system-ui, 'Apple Color Emoji';
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);

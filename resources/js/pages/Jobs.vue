@@ -2,6 +2,7 @@
     import CarouselImg from '@/components/custom/CarouselImg.vue';
     import CenterContent from '@/components/custom/CenterContent.vue';
     import FAQ from '@/components/custom/FAQ.vue';
+import HeroTypewriterEffect from '@/components/custom/HeroTypewriterEffect.vue';
     import LanguageTag from '@/components/custom/LanguageTag.vue';
     import SubmitLink from '@/components/custom/SubmitLink.vue';
     import NavLayouts from '@/layouts/NavLayouts.vue';
@@ -68,28 +69,17 @@
 </script>
 <template>
     <NavLayouts>
-        <CenterContent>
-            <!-- Hero -->
-            <section class="flex flex-col items-center">
-                <div>
-                    <h1 class="text-4xl font-mono font-bold mt-8">Latest Tech Jobs</h1>
-                </div>
-                <div>
-                    <p class="font-mono text-center mt-4">Connecting tech talent with opportunities. Find your next career move or discover the perfect candidate.</p>
-                </div>
-            </section>
+        <HeroTypewriterEffect />
 
+        <CenterContent>
             <!-- Carousel -->
-            <section class="mt-12">
+            <section class="my-15">
                 <div class="w-full">
                     <CarouselImg />
                 </div>
             </section>
 
-            <!-- All Jobs -->
-            <section class="mt-8">
-                <h1 class="font-mono text-xl md:text-2xl">All Jobs</h1>
-            </section>
+            
 
             <article>
                 <section class="border border-neutral-200 p-2">
@@ -116,23 +106,23 @@
                                         :alt="`${job.company_name} logo`">
                                 </div>
                                 <div class="flex-1">
-                                    <h2 class="font-mono text-red-600 text-[12px]">{{ job.company_name }}</h2>
-                                    <h1 class="font-mono font-bold">{{ job.job_title }}</h1>
+                                    <h2 class=" text-red-600 text-[12px]">{{ job.company_name }}</h2>
+                                    <h1 class=" font-bold">{{ job.job_title }}</h1>
                                     <div class="flex gap-x-2">
                                         <div class="absolute top-0 right-4 flex">
                                             <p class="">
                                                 <Banknote class="w-3 inline-block text-neutral-500" />
-                                                <span class="text-[10px] font-mono text-neutral-900">{{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.min_currency_value) }}  - {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.max_currency_value) }} </span>
+                                                <span class="text-[10px] text-neutral-900">{{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.min_currency_value) }}  - {{ new Intl.NumberFormat("en-US", {style: "currency", currency: "USD",}).format(job.max_currency_value) }} </span>
                                             </p>
                                         </div>
 
                                         <p>
                                             <MapPin class="w-3 inline-block text-neutral-500" />
-                                            <span class="text-[12px] font-mono text-neutral-500"> {{ job.location }} | Munish, German |</span>
+                                            <span class="text-[12px] text-neutral-500"> {{ job.location }} | Munish, German |</span>
                                         </p>
                                         <p>
                                             <Calendar class="w-3 mr-1 inline-block text-neutral-500" />
-                                            <span :title="new Date(job.created_at).toDateString()" class="text-[12px] text-neutral-500 font-mono">{{ timeAgo(job.created_at) }}</span>
+                                            <span :title="new Date(job.created_at).toDateString()" class="text-[12px] text-neutral-500">{{ timeAgo(job.created_at) }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -153,11 +143,11 @@
                                             <img class="w-full object-cover object-center" :src="`/storage/${selectedJob.company_logo}`" :alt="`${selectedJob.company_name} logo`">
                                         </div> 
                                         <div class="pl-1">
-                                            <p class="font-mono text-neutral-100 text-sm">{{ selectedJob.company_name }}</p>
-                                            <p class="font-mono font-bold my-1 text-red-600">{{ selectedJob.job_title }}</p>
+                                            <p class="text-neutral-100 text-sm">{{ selectedJob.company_name }}</p>
+                                            <p class="font-bold my-1 text-red-600">{{ selectedJob.job_title }}</p>
                                             <div class="flex gap-x-2">
-                                                <p class="text-sm font-mono text-neutral-100"> <MapPin class="size-4 inline-block text-neutral-100" />Berlin, German |</p>
-                                                <a :href="selectedJob.company_url" target="_blank" class="font-mono text-sm text-neutral-100 hover:underline hover:text-red-300">Visit Company website <ExternalLinkIcon class="size-3 inline-block" /></a>
+                                                <p class="text-sm text-neutral-100"> <MapPin class="size-4 inline-block text-neutral-100" />Berlin, German |</p>
+                                                <a :href="selectedJob.company_url" target="_blank" class="text-sm text-neutral-100 hover:underline hover:text-red-300">Visit Company website <ExternalLinkIcon class="size-3 inline-block" /></a>
                                             </div>
                                         </div>
                     
@@ -165,7 +155,7 @@
                                         <SubmitLink :href="selectedJob.application_url" content="Apply to this Job" />
                                 </header>
                                 <article class="">
-                                    <aside class="my-4 px-4 prose prose-neutral max-w-none prose-headings:font-mono prose-p:font-mono prose-p:leading-relaxed whitespace-normal" v-html="selectedJob.content" />
+                                    <aside class="my-4 px-4 prose prose-neutral max-w-none  prose-p:leading-relaxed whitespace-normal" v-html="selectedJob.content" />
                                     <div>
                                         <SubmitLink :href="selectedJob.application_url" content="Apply to this Job" />
                                     </div>
@@ -206,7 +196,7 @@
 
         <!-- Create Button -->
             <div class="fixed bottom-30 right-10">
-                <Link href="/job/post-a-job" class="group relative py-2 px-3 border font-mono bg-red-600 hover:bg-amber-600 transition-colors duration-300 ease-in-out">
+                <Link href="/job/post-a-job" class="group relative py-2 px-3 border bg-red-600 hover:bg-amber-600 transition-colors duration-300 ease-in-out">
                     <span class="font-mono text-white group-hover:text-black">Post a job</span>
 
                     <div class="absolute right-2 bottom-7">

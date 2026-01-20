@@ -10,7 +10,7 @@
 <template>
     <Link 
         :href="href" 
-        :class="[active ? 'text-red-600': 'text-neutral-950', 'font-mono hover:underline transition-color duration-75 ease-in']"
+        :class="[active ? 'text-red-600': 'text-neutral-950', 'hover:underline transition-color duration-75 ease-in']"
         >
         <slot></slot>
     </Link>

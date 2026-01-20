@@ -12,12 +12,12 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <!-- Brand Section -->
                 <div class="md:col-span-2">
-                    <h3 class="text-2xl font-bold font-mono text-red-600 mb-4">
-                        JobMatch
-                    </h3>
-                    <p class="text-neutral-400 font-mono text-sm leading-relaxed mb-6">
+                    <div class="w-80 mb-4">
+                        <img class="object-center object-contain w-full" src="/images/logos/jobpantherlogo-white.svg" alt="">
+                    </div>
+                    <p class="text-neutral-400 text-sm leading-relaxed mb-6">
                         Connecting tech talent with opportunities. 
-                        Find your next career move or discover the perfect candidate.
+                        Browse thousands of tech jobs or post your opening for free
                     </p>
                     
                     <!-- Social Media Links -->
@@ -45,14 +45,14 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h4 class="text-lg font-semibold font-mono mb-4">
+                    <h4 class="text-lg font-semibold mb-4">
                         Quick Links
                     </h4>
                     <ul class="space-y-2">
                         <li>
                             <Link 
                                 href="/terms" 
-                                class="text-neutral-400 hover:text-red-600 transition-colors duration-200 font-mono text-sm"
+                                class="text-neutral-400 hover:text-red-600 transition-colors duration-200 text-sm"
                             >
                                 Terms of Service
                             </Link>
@@ -60,7 +60,7 @@
                         <li>
                             <Link 
                                 href="/privacy-policy" 
-                                class="text-neutral-400 hover:text-red-600 transition-colors duration-200 font-mono text-sm"
+                                class="text-neutral-400 hover:text-red-600 transition-colors duration-200 text-sm"
                             >
                                 Privacy Policy
                             </Link>
@@ -68,7 +68,7 @@
                         <li>
                             <Link 
                                 href="/about-us" 
-                                class="text-neutral-400 hover:text-red-600 transition-colors duration-200 font-mono text-sm"
+                                class="text-neutral-400 hover:text-red-600 transition-colors duration-200 text-sm"
                             >
                                 About Us
                             </Link>
@@ -78,15 +78,15 @@
 
                 <!-- Contact Section -->
                 <div>
-                    <h4 class="text-lg font-semibold font-mono mb-4">
+                    <h4 class="text-lg font-semibold mb-4">
                         Get In Touch
                     </h4>
-                    <p class="text-neutral-400 font-mono text-sm mb-4">
+                    <p class="text-neutral-400 text-sm mb-4">
                         Have questions? We'd love to hear from you.
                     </p>
                     <a 
                         href="mailto:hello@jobmatch.com" 
-                        class="text-red-600 hover:text-red-500 transition-colors duration-200 font-mono text-sm flex items-center gap-2"
+                        class="text-red-600 hover:text-red-500 transition-colors duration-200 text-sm flex items-center gap-2"
                     >
                         <Mail class="size-4" />
                         hello@jobmatch.com
@@ -98,7 +98,7 @@
             <div class="border-t border-neutral-800 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     <!-- Copyright and Legal Links -->
-                    <div class="flex flex-col md:flex-row items-center gap-2 md:gap-1 text-neutral-500 font-mono text-sm">
+                    <div class="flex flex-col md:flex-row items-center gap-2 md:gap-1 text-neutral-500 text-sm">
                         <div class="flex items-center gap-2">
                             <Link 
                                 href="/terms" 

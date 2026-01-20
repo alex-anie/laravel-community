@@ -53,7 +53,7 @@
                     :aria-expanded="openIndex === index"
                     :aria-controls="`faq-content-${index}`"
                     >
-                    <span class="text-left font-mono font-semibold text-neutral-900 pr-4">{{ faq.question }}</span>
+                    <span class="text-left font-semibold text-neutral-900 pr-4">{{ faq.question }}</span>
                     <ChevronDownIcon
                         :class="[
                             'size-5 text-red-600 transition-transform duration-300 flex-shrink-0', openIndex === index ? 'rotate-180' : ''
@@ -75,7 +75,7 @@
                         class="overflow-hidden"
                     >
                         <div class="px-6 py-4 bg-neutral-50 border-t border-neutral-200">
-                            <p class="text-neutral-700 font-mono text-sm leading-relaxed">
+                            <p class="text-neutral-700 text-sm leading-relaxed">
                                 {{ faq.answer }}
                             </p>
                         </div>

@@ -17,7 +17,7 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
-    --cal-sans: Cal Sans, ui-sans-serif, system-ui, 'Apple Color Emoji';
+    --font-cal-sans: Cal Sans, ui-sans-serif, system-ui, 'Apple Color Emoji';
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);

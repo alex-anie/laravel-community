@@ -210,10 +210,10 @@ function submitForm(){
                             </div>
 
                             <div class="w-full max-w-md space-y-2">
-                                <label class="block text-sm font-mono" for="">Tech Stack (Select up to 5) {{ selected.length }} / 5 selected</label>
+                                <label class="block text-sm" for="">Tech Stack (Select up to 5) {{ selected.length }} / 5 selected</label>
                                 <!-- select box -->
                                 <div class="border p-2 cursor-pointer flex flex-wrap gap-2" @click="open = !open">
-                                    <span v-if="selected.length === 0" class="text-neutral-500 text-sm font-mono">
+                                    <span v-if="selected.length === 0" class="text-neutral-500 text-sm">
                                         Click to select tags
                                     </span>
 

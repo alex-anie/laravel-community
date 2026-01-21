@@ -99,7 +99,7 @@
                                         :alt="`${job.company_name} logo`">
                                 </div>
                                 <div class="flex-1">
-                                    <h2 class=" text-red-600 text-[12px]">{{ job.company_name }}</h2>
+                                    <h2 class=" text-red-600 text-[12px] capitalize">{{ job.company_name }}</h2>
                                     <h1 class=" font-bold">{{ job.job_title }}</h1>
                                     <div class="flex gap-x-2">
                                         <div class="absolute top-0 right-4 flex">

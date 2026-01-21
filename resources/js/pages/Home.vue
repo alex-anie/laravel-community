@@ -1,14 +1,16 @@
 <script setup lang="ts">
+    import CarouselImg from '@/components/custom/CarouselImg.vue';
     import CenterContent from '@/components/custom/CenterContent.vue';
+    import FAQ from '@/components/custom/FAQ.vue';
     import HeadingText from '@/components/custom/HeadingText.vue';
+    import HeroTypewriterEffect from '@/components/custom/HeroTypewriterEffect.vue';
     import LanguageTag from '@/components/custom/LanguageTag.vue';
     import SubmitLink from '@/components/custom/SubmitLink.vue';
     import NavLayouts from '@/layouts/NavLayouts.vue';
     import { MyJobs } from '@/types';
     import { Link, router } from '@inertiajs/vue3';
-    import { MapPin, Banknote, Calendar, ExternalLinkIcon, Database, Globe2Icon, Briefcase } from 'lucide-vue-next';
+    import { MapPin, Banknote, Calendar, ExternalLinkIcon, Database } from 'lucide-vue-next';
     import { ref, watch } from 'vue';
-    import MyJobController from '@/actions/App/Http/Controllers/MyJobController';
 
     const props = defineProps<{
         jobs: {
@@ -68,33 +70,39 @@
 </script>
 <template>
     <NavLayouts>
-        <header class="bg-neutral-800 h-59 w-full mt-20">
-            <div class="h-full flex flex-col justify-center w-[80%] mx-auto">
-                <h1 class="text-red-600 font-cal-sans text-3xl">The Best</h1>
-                <h1 class="text-red-600 font-cal-sans text-3xl">Job board for Tech Jobs</h1>
-                <p class="mt-3 text-neutral-200">Connecting tech talent with opportunities. Browse thousands of tech jobs or post your opening for free.</p>
-            </div>
-        </header>
-        <CenterContent>
+        <HeroTypewriterEffect />
 
-            <div class="mt-20 mb-8">
-                <HeadingText content="All Jobs" />
-            </div>
+        <CenterContent>
+            <!-- Carousel -->
+            <section class="my-15">
+                <div class="w-full">
+                    <CarouselImg />
+                </div>
+            </section>
+
+            <HeadingText content="All Jobs" />
 
             <article>
-                <section class="mb-8">
-                    <aside class="flex gap-x-4">
+                <section class="my-8">
+                    <aside class="flex gap-y-4">
                         <!-- Left Panel - Job List -->
-                        <div class="flex-1">
+                        <div class="w-[30rem] max-h-screen overflow-y-auto">
                             <Link v-for="job in props.jobs.data" 
                                 :key="job.id" 
                                 preserve-state
                                 preserve-scroll
-                                :href="MyJobController.show(job.id)" 
-                                class=" block border p-2 transition-colors border-neutral-300 hover:border-red-400">
+                                replace 
+                                :href="`/?job=${job.id}`" 
+                                :class="[
+                                    'block border p-2 transition-colors', 
+                                    selectedJob?.id === job.id 
+                                        ? 'border-red-600 bg-red-50'
+                                        : 'border-neutral-300 hover:border-red-400'
+
+                                ]">
                             <div class="relative flex gap-x-2">
-                                <div class="size-10 border border-neutral-200">
-                                    <img class="size-full object-contain object-center" 
+                                <div class="size-15">
+                                    <img class="size-full object-cover object-center" 
                                         :src="`/storage/${job.company_logo}`" 
                                         :alt="`${job.company_name} logo`">
                                 </div>
@@ -111,19 +119,8 @@
 
                                         <p>
                                             <MapPin class="w-3 inline-block text-neutral-500" />
-                                            <span class="text-[12px] text-neutral-500"> {{ job.location }} </span>
+                                            <span class="text-[12px] text-neutral-500"> {{ job.location }} | Munish, German |</span>
                                         </p>
-
-                                        <p>
-                                            <Briefcase class="w-3 inline-block text-neutral-500" />
-                                            <span class="text-[12px] text-neutral-500"> Contract </span>
-                                        </p>
-
-                                        <p>
-                                            <Globe2Icon class="w-3 inline-block text-neutral-500" />
-                                            <span class="text-[12px] text-neutral-500"> Munish, German |</span>
-                                        </p>
-                                        
                                         <p>
                                             <Calendar class="w-3 mr-1 inline-block text-neutral-500" />
                                             <span :title="new Date(job.created_at).toDateString()" class="text-[12px] text-neutral-500">{{ timeAgo(job.created_at) }}</span>
@@ -139,7 +136,7 @@
                         </div>
 
                         <!-- Right Panel - Job List -->
-                        <div class="w-[20rem] border border-red-600 sticky top-15 h-fit max-h-screen overflow-y-auto">
+                        <div class="flex-1 border border-red-600 sticky top-4 h-fit max-h-screen overflow-y-auto">
                             <main v-if="selectedJob" :job="selectedJob" class="">
                                 <header class="bg-neutral-900 p-2">
                                     <div class="flex">
@@ -191,21 +188,11 @@
                         />
                     </div>
             </article>
+
+            <!-- FAQs -->
+            <article>
+                <FAQ />
+            </article>
         </CenterContent>
-
-        <!-- Create Button -->
-            <div class="fixed bottom-30 right-10">
-                <Link href="/job/post-a-job" class="group relative py-2 px-3 border bg-red-600 hover:bg-amber-600 transition-colors duration-300 ease-in-out">
-                    <span class="text-white group-hover:text-black">Post a job</span>
-
-                    <div class="absolute right-2 bottom-7">
-                        <span class="relative flex size-3">
-                            <span
-                                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-                            <span class="relative inline-flex size-3 rounded-full bg-red-400"></span>
-                        </span>
-                    </div>
-                </Link>
-            </div>
     </NavLayouts>
 </template>

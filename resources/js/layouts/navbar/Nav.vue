@@ -19,7 +19,7 @@ withDefaults(
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
-    <section class="bg-white/45 backdrop-blur-3xl border shadow-lg fixed w-full top-0 z-20">
+    <section class="bg-white/45 backdrop-blur-3xl shadow-lg fixed w-full top-0 z-20">
     <nav
         class="w-[95%] mx-auto"
     >
@@ -41,13 +41,13 @@ withDefaults(
             <div>
                 <ul class="flex gap-x-6">
                     <li>
-                        <NavLink href="/" :active="$page.url === '/'">Jobs</NavLink>
+                        <NavLink href="/jobs" :active="$page.url === '/jobs'">Jobs</NavLink>
                     </li>
                     <li>
                         <NavLink href="/hire-talents" :active="$page.url === '/hire-talents'">Hire Talents</NavLink>
                     </li>
                     <li>
-                        <NavLink href="/about-us" :active="$page.url === '/open-source'">About Us</NavLink>
+                        <NavLink href="/about-us" :active="$page.url === '/about-us'">About Us</NavLink>
                     </li>
                 </ul>
             </div>

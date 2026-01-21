@@ -92,8 +92,9 @@ class MyJobController extends Controller
         return redirect()->route('jobs')->with('success', 'Job created Successfully');
     }
 
-    public function show(MyJob $myJob){
-        return Inertia::render('Job', ['job' => $myJob]);
+    public function show(MyJob $job){
+        // dd($myJob);
+        return Inertia::render('job/ShowJob', ['job' => $job]);
     }
 
 }

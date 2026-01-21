@@ -81,14 +81,14 @@ onUnmounted(() => {
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link 
                     href="/jobs" 
-                    class="px-8 py-4 bg-red-600 text-white font-mono font-bold hover:bg-red-700 transition-colors duration-200 flex items-center justify-center gap-2"
+                    class="px-8 py-4 bg-red-600 text-white font-bold hover:bg-red-700 transition-colors duration-200 flex items-center justify-center gap-2"
                 >
                     <Search class="size-5" />
                     Browse Jobs
                 </Link>
                 <Link 
                     href="/job/post-a-job" 
-                    class="px-8 py-4 bg-white text-neutral-900 font-mono font-bold hover:bg-neutral-100 transition-colors duration-200 flex items-center justify-center gap-2"
+                    class="px-8 py-4 bg-white text-neutral-900 font-bold hover:bg-neutral-100 transition-colors duration-200 flex items-center justify-center gap-2"
                 >
                     <Briefcase class="size-5" />
                     Post a Job
